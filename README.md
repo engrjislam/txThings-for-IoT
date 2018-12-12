@@ -21,12 +21,14 @@ For this experiment we could use one single device (either a PC or a RPi). But I
 We do not actually need any client IP but to see from which device the server is getting the request for a specific request. Lets keep it easy for now. 
 
 - **server**
+
 Let us assume, the first RPi (WHITEBOX1) is our server. We need the IP for client to send the request to it. So let's get the IP and then run the server script to the first RPi (WHITEBOX1).
 
         ifconfig | grep inet[^6]
         sudo python3 examples/server.py
 
 - **client**
+
 We got `100.67.95.76` (you may get different) as `ifconfig | grep inet[^6]` at the first RPi (WHITEBOX1). I use BLACKBOX1 as client to see whether WHITEBOX1 server got the request from it or
  not? Then I modifidy cilent script to access the server at `examples/clientGET.py`. We need to modify 4 things here -- 
   * `ip` --- we need to modify ip value to 100.67.95.76 at `WHITEBOX1` device in dictionary definition as server at line -- 
