@@ -31,19 +31,19 @@ Let us assume, the first RPi (WHITEBOX1) is our server. We need the IP for clien
 
 We got `100.67.95.76` (you may get different) as `ifconfig | grep inet[^6]` at the first RPi (WHITEBOX1). I use BLACKBOX1 as client to see whether WHITEBOX1 server got the request from it or
  not? Then I modifidy cilent script to access the server at `examples/clientGET.py`. We need to modify 4 things here -- 
-  * `ip` --- we need to modify ip value to 100.67.95.76 at `WHITEBOX1` device in dictionary definition as server at line -- 
+  1. `ip` --- we need to modify ip value to 100.67.95.76 at `WHITEBOX1` device in dictionary definition as server at line -- 
 
         WHITEBOX1 = {"name":"WHITEBOX1", "ip":"100.67.95.76"}
 
-  * `SERVER` --- 
+  2. `SERVER` --- 
 
         SERVER = WHITEBOX1
 
-  * `URI` --- request.opt.uri_path (binary string value) at requestResource in Agent class
+  3. `URI` --- request.opt.uri_path (binary string value) at requestResource in Agent class
 
         request.opt.uri_path = (b'counter',)
   
-  * SERVER_IP_ADDRESS --- 
+  4. SERVER_IP_ADDRESS --- 
 
         request.remote = (ip_address(SERVER_IP_ADDRESS), coap.COAP_PORT)
 
