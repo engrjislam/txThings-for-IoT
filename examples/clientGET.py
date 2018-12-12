@@ -14,6 +14,37 @@ import txthings.coap as coap
 import txthings.resource as resource
 
 
+
+""" 
+IoT device IP list with device name 
+"""
+
+# --------------------------------------------------- #
+
+# WHITEBOX 
+WHITEBOX1 = {"name": "WHITEBOX1", "ip":"100.67.95.76"}
+WHITEBOX2 = {"name": "WHITEBOX2", "ip":"192.168.0.120"}
+
+# BLACKBOX
+BLACKBOX1 = {"name": "BLACKBOX1", "ip":"100.78.15.169"}
+BLACKBOX2 = {"name": "BLACKBOX2", "ip":"192.168.0.119"}
+
+# --------------------------------------------------- #
+
+
+"""
+Server configurations:
+Use any of the above device as the where server.py script is running. 
+"""
+# --------------------------------------------------- #
+
+SERVER 			= WHITEBOX1
+SERVER_IP_ADDRESS    	= "%(ip)s" % SERVER 
+
+# --------------------------------------------------- #
+
+
+
 class Agent:
     """
     Example class which performs single GET request to coap.me
@@ -39,9 +70,10 @@ class Agent:
     def requestResource(self):
         request = coap.Message(code=coap.GET)
         # Send request to "coap://coap.me:5683/test"
+        # request.opt.uri_path = (b'test',)
         request.opt.uri_path = (b'counter',)
         request.opt.observe = 0
-        request.remote = (ip_address("100.67.95.76"), coap.COAP_PORT)
+        request.remote = (ip_address(SERVER_IP_ADDRESS), coap.COAP_PORT)
         d = protocol.request(request, observeCallback=self.printLaterResponse)
         d.addCallback(self.printResponse)
         d.addErrback(self.noResponse)

@@ -12,5 +12,3 @@ instructions
 
 4. find ip of the server (this will require for client)
 	ifconfig | grep inet[^6]
-
-3. 
