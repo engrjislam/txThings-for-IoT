@@ -1,0 +1,16 @@
+instructions
+------------
+
+1. first we need to upgrade pip command
+	pip install --upgrade pip
+
+2. lets find figured out list of requrements
+	sudo pip freeze > requirements.txt
+
+3. install requirements 
+	sudo pip install -r requirements.txt
+
+4. find ip of the server (this will require for client)
+	ifconfig | grep inet[^6]
+
+3. 
