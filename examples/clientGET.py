@@ -18,7 +18,6 @@ import txthings.resource as resource
 """ 
 IoT device IP list with device name 
 """
-
 # --------------------------------------------------- #
 
 # WHITEBOX 
@@ -64,7 +63,7 @@ Here default encoding is 'utf-8' if no explicit encoding pass encode method.
 """
 # --------------------------------------------------- #
 
-URI_COUNTER 			= b'counter'
+URI_COUNTER 			= b'.well-known'
 #URI_COUNTER 			= bytes('counter', 'utf-8') 
 #URI_COUNTER 			= 'counter'.encode() 
 #URI_COUNTER 			= 'counter'.encode('utf-8') 
@@ -101,7 +100,7 @@ class Agent:
         request.opt.uri_path = (URI_COUNTER, )
         request.opt.observe = 0
         request.remote = (ip_address(SERVER_IP_ADDRESS), coap.COAP_PORT)
-        #print("-----------------------------------------------------------", )
+        print("-----------------------------------------------------------", request.opt.uri_path)
         d = protocol.request(request, observeCallback=self.printLaterResponse)
         d.addCallback(self.printResponse)
         d.addErrback(self.noResponse)

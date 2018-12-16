@@ -16,6 +16,26 @@ import txthings.resource as resource
 import txthings.coap as coap
 
 
+class TestResource (resource.CoAPResource):
+    """
+    Example Resource which supports only GET method. Response is 
+    "Testing ... ... ...".
+
+    Name render_<METHOD> is required by convention. Such method should
+    return a Deferred. If the result is available immediately it's best
+    to use Twisted method defer.succeed(msg).
+    """
+   #isLeaf = True
+
+    def __init__(self):
+        resource.CoAPResource.__init__(self)
+        self.visible = True
+
+    def render_GET(self, request):
+        payload = "Testing ... ... ..."
+        response = coap.Message(code=coap.CONTENT, payload=payload)
+        return defer.succeed(response)
+
 class CounterResource (resource.CoAPResource):
     """
     Example Resource which supports only GET method. Response is a
@@ -150,8 +170,12 @@ root = resource.CoAPResource()
 
 well_known = resource.CoAPResource()
 root.putChild('.well-known', well_known)
+
 core = CoreResource(root)
 well_known.putChild('core', core)
+
+test = TestResource()
+root.putChild('test', test)
 
 counter = CounterResource(5000)
 root.putChild('counter', counter)
