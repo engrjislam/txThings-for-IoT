@@ -22,13 +22,16 @@ IoT device IP list with device name
 # --------------------------------------------------- #
 
 # WHITEBOX 
-WHITEBOX1 = {"name": "WHITEBOX1", "ip":"100.67.95.76"}
-WHITEBOX2 = {"name": "WHITEBOX2", "ip":"192.168.0.120"}
+WHITEBOX1 = {"name": "WHITEBOX1", "ip":"100.67.95.76", "location":"TS430"}
+WHITEBOX2 = {"name": "WHITEBOX2", "ip":"192.168.0.120", "location":"PSOAS"}
 
 # BLACKBOX
-BLACKBOX1 = {"name": "BLACKBOX1", "ip":"100.78.15.169"}
-BLACKBOX2 = {"name": "BLACKBOX2", "ip":"192.168.0.119"}
+BLACKBOX1 = {"name": "BLACKBOX1", "ip":"100.78.15.169", "location":"TS430"}
+BLACKBOX2 = {"name": "BLACKBOX2", "ip":"192.168.0.119", "location":"PSOAS"}
 
+# MaxPain
+MAXPAIN1 = {"name": "MAXPAIN1", "ip":"100.74.234.165", "location":"TS430"}
+MAXPAIN2 = {"name": "MAXPAIN2", "ip":"192.168.0.106", "location":"PSOAS"}
 # --------------------------------------------------- #
 
 
@@ -38,8 +41,33 @@ Use any of the above device as the where server.py script is running.
 """
 # --------------------------------------------------- #
 
-SERVER 			= WHITEBOX1
+# SERVER  		= WHITEBOX1 			
+# SERVER  		= WHITEBOX2 			
+# SERVER  		= BLACKBOX1 			
+# SERVER  		= BLACKBOX2 			
+# SERVER 		= MAXPAIN1
+SERVER 			= MAXPAIN2
 SERVER_IP_ADDRESS    	= "%(ip)s" % SERVER 
+
+# --------------------------------------------------- #
+
+
+"""
+URI: Unifrom Resource Identifier
+URL: Unifrom Resource Locator
+
+URI &/ URL should be in byte i.e. some_string.encode(encoding) or bytes(some_string, encoding).
+Here default encoding is 'utf-8' if no explicit encoding pass encode method.
+
+# Send request to "coap://coap.me:5683/test"
+# request.opt.uri_path = (b'test',)
+"""
+# --------------------------------------------------- #
+
+URI_COUNTER 			= b'counter'
+#URI_COUNTER 			= bytes('counter', 'utf-8') 
+#URI_COUNTER 			= 'counter'.encode() 
+#URI_COUNTER 			= 'counter'.encode('utf-8') 
 
 # --------------------------------------------------- #
 
@@ -70,10 +98,10 @@ class Agent:
     def requestResource(self):
         request = coap.Message(code=coap.GET)
         # Send request to "coap://coap.me:5683/test"
-        # request.opt.uri_path = (b'test',)
-        request.opt.uri_path = (b'counter',)
+        request.opt.uri_path = (URI_COUNTER, )
         request.opt.observe = 0
         request.remote = (ip_address(SERVER_IP_ADDRESS), coap.COAP_PORT)
+        #print("-----------------------------------------------------------", )
         d = protocol.request(request, observeCallback=self.printLaterResponse)
         d.addCallback(self.printResponse)
         d.addErrback(self.noResponse)
