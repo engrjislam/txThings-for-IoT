@@ -63,10 +63,10 @@ Here default encoding is 'utf-8' if no explicit encoding pass encode method.
 """
 # --------------------------------------------------- #
 
-URI_COUNTER 			= b'test'
-#URI_COUNTER 			= bytes('test', 'utf-8') 
-#URI_COUNTER 			= 'test'.encode() 
-#URI_COUNTER 			= 'test'.encode('utf-8') 
+URI_COUNTER 			= b'counter'
+#URI_COUNTER 			= bytes('counter', 'utf-8') 
+#URI_COUNTER 			= 'counter'.encode() 
+#URI_COUNTER 			= 'counter'.encode('utf-8') 
 
 # --------------------------------------------------- #
 
